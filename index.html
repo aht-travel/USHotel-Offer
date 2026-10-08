@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join Now — U.S. Hotel Stay</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+.container{width:min(760px,100%);margin:auto;padding:14px}
+.card{background:#fff;border-radius:18px;box-shadow:0 7px 24px rgba(20,55,80,.10);overflow:hidden}
+
+.top-banner{
+background:#17324d;color:#fff;border-radius:16px;padding:16px 18px;
+text-align:center;margin-bottom:12px
+}
+.top-banner .main{display:block;font-size:1.15rem;font-weight:950;letter-spacing:.5px}
+.top-banner .message{display:block;margin-top:5px;font-size:.92rem;line-height:1.45}
+.top-banner .highlight{font-weight:900;color:#ffe28a}
+
+.start-card{text-align:center;padding:20px 18px;margin-bottom:12px}
+.start-card h2{margin:0 0 7px;font-size:1.35rem}
+.start-card p{margin:0 0 15px;color:#607487}
+
+.start-btn{
+border:0;border-radius:12px;background:#0b7a75;color:#fff;padding:14px 18px;
+font-weight:950;font-size:.9rem;cursor:pointer;width:100%;
+box-shadow:0 6px 15px rgba(11,122,117,.22)
+}
+.start-btn:active{transform:translateY(1px)}
+
+.hero{position:relative;min-height:360px;color:#fff;margin-bottom:12px}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero:after{
+content:"";position:absolute;inset:0;
+background:linear-gradient(180deg,rgba(4,38,58,.15),rgba(4,38,58,.84))
+}
+.hero-content{
+position:relative;z-index:2;min-height:360px;display:flex;
+flex-direction:column;justify-content:flex-end;padding:26px 22px
+}
+.kicker{font-size:.78rem;font-weight:950;letter-spacing:1.4px;text-transform:uppercase}
+.hero h1{margin:7px 0 8px;font-size:2rem;line-height:1.08}
+.hero-sub{margin:0;font-size:1rem;max-width:640px}
+.hero-tag{
+display:inline-block;margin-top:13px;font-size:.82rem;font-weight:800;
+background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);
+border-radius:999px;padding:7px 11px;width:max-content;max-width:100%
+}
+
+.welcome{padding:20px 18px;text-align:center;margin-bottom:12px}
+.welcome h2{margin:0 0 6px;font-size:1.3rem}
+.welcome p{margin:0;color:#607487}
+
+.survey-card{margin-bottom:12px}
+.survey-card-inner{padding:20px}
+.survey-badge{
+display:inline-block;background:#e8f7f5;color:#0b6c68;border-radius:999px;
+padding:6px 10px;font-size:.72rem;font-weight:950;letter-spacing:.7px
+}
+.survey-card h2{margin:9px 0 7px;font-size:1.3rem}
+.survey-card p{margin:8px 0;color:#536b7e;font-size:.92rem}
+.survey-highlight{
+margin-top:13px;padding:12px;border-radius:12px;background:#fff8dc;
+border:1px solid #f1df9c;color:#5e4a13;font-size:.9rem
+}
+.survey-note{margin-top:10px;color:#607487;font-size:.84rem;font-weight:700}
+
+.bonus{margin:12px 0}
+.bonus-inner{
+display:flex;gap:12px;align-items:center;
+background:linear-gradient(135deg,#0b7a75,#145b7d);color:#fff;
+border-radius:16px;padding:15px 17px;
+box-shadow:0 7px 22px rgba(11,122,117,.2)
+}
+.bonus-icon{font-size:1.8rem}
+.bonus-inner strong{font-weight:950}
+
+.section{padding:0 0 20px;margin-bottom:12px}
+.hotel-photo{width:100%;height:245px;object-fit:cover;display:block}
+.section h2{padding:0 20px;margin:18px 0 4px;font-size:1.45rem}
+.section-intro{padding:0 20px;margin:0 0 13px;color:#607487;font-weight:700}
+.benefits{list-style:none;padding:0 20px;margin:0}
+.benefits li{
+position:relative;padding:9px 0 9px 25px;
+border-bottom:1px solid #edf1f3;font-size:.93rem
+}
+.benefits li:before{
+content:"✓";position:absolute;left:0;top:8px;
+color:#0b7a75;font-weight:950
+}
+.closing{
+margin:17px 20px 0;padding:13px;border-radius:12px;text-align:center;
+background:#eef9f7;color:#0b6c68;font-weight:950
+}
+
+.modal-overlay{
+position:fixed;inset:0;background:rgba(4,23,35,.68);display:none;
+align-items:center;justify-content:center;padding:15px;z-index:1000
+}
+.modal-overlay.open{display:flex}
+.modal-wrap{width:min(620px,100%);max-height:92vh;overflow:auto}
+.modal{
+position:relative;background:#fff;border-radius:20px;padding:22px;
+box-shadow:0 15px 45px rgba(0,0,0,.25)
+}
+.close{
+position:absolute;right:12px;top:8px;border:0;background:transparent;
+font-size:30px;color:#71808b;cursor:pointer
+}
+.modal h3{margin:0 32px 12px 0;font-size:1.35rem}
+
+.safety,.survey{
+background:#f6fafb;border:1px solid #dce8ed;border-radius:14px;
+padding:15px;color:#425c6d;font-size:.92rem
+}
+.continue-btn,.send-btn{
+width:100%;border:0;border-radius:12px;background:#0b7a75;color:#fff;
+padding:13px 15px;margin-top:13px;font-weight:950;cursor:pointer
+}
+.continue-btn:disabled,.send-btn:disabled{opacity:.55;cursor:not-allowed}
+.survey p{margin:0 0 11px}
+.survey.note{margin-top:10px;background:#fff8dc;border-color:#f1df9c;color:#5e4a13}
+
+.check{display:flex;gap:9px;align-items:flex-start;margin-top:13px;font-size:.86rem;font-weight:700}
+.check input{margin-top:3px}
+
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.choice{
+border:1px solid #dce8ed;border-radius:15px;background:#fff;padding:16px 12px;
+text-align:center;cursor:pointer;min-height:170px;color:#17324d
+}
+.choice:hover{border-color:#0b7a75}
+.choice-icon{font-size:2rem;margin-bottom:5px}
+.choice strong{display:block;font-size:.95rem}
+.choice span{display:block;margin-top:5px;color:#667d8d;font-size:.8rem}
+
+.choice.wide{
+border:2px solid #f2c94c;
+background:linear-gradient(145deg,#fffdf0,#fff8d8,#fffdf3);
+box-shadow:0 7px 22px rgba(242,201,76,.25);
+overflow:hidden;animation:widePulse 2.2s ease-in-out infinite;
+position:relative
+}
+.choice.wide:after{
+content:"";position:absolute;inset:0;transform:translateX(-130%);
+background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);
+animation:shine 2.8s infinite
+}
+.wide-reward{
+position:relative;z-index:2;margin:10px 0 0;padding:8px 9px;border-radius:10px;
+background:#0f3460;color:#fff;text-align:center;font-size:.78rem;line-height:1.25;
+font-weight:800;box-shadow:0 4px 14px rgba(15,52,96,.22);
+animation:rewardBounce 1.8s ease-in-out infinite
+}
+.wide-reward .reward-amount{
+display:block;color:#ffe28a;font-size:1.15rem;font-weight:950;
+letter-spacing:.3px;text-shadow:0 1px 5px rgba(0,0,0,.18)
+}
+.wide-reward .reward-text{display:block;color:#fff;font-size:.72rem;margin-top:1px}
+
+@keyframes widePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.015)}}
+@keyframes shine{0%{transform:translateX(-130%)}55%,100%{transform:translateX(130%)}}
+@keyframes rewardBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+.email-box{
+background:#f6fafb;border:1px solid #dce8ed;border-radius:14px;padding:15px
+}
+.email-box label{display:block;font-weight:900;font-size:.86rem;margin-bottom:6px}
+.email-box input{
+width:100%;padding:12px;border:1px solid #c9d8df;border-radius:10px;
+font-size:1rem;outline:none
+}
+.email-box input:focus{border-color:#0b7a75}
+.email-note{font-size:.78rem;color:#71808b;margin-top:6px}
+.status{margin-top:9px;font-size:.83rem;font-weight:800;min-height:18px}
+.status.success{color:#08734f}
+.status.error{color:#b33a31}
+.zoom-note{margin-top:12px;font-size:.82rem;color:#667d8d}
+.back{
+border:0;background:transparent;color:#0b6c68;font-weight:900;
+margin-top:13px;cursor:pointer;padding:5px 0
+}
+
+@media(max-width:560px){
+.container{padding:9px}
+.hero,.hero-content{min-height:330px}
+.hero h1{font-size:1.72rem}
+.hotel-photo{height:205px}
+.choice-grid{grid-template-columns:1fr}
+.choice{min-height:auto}
+.survey-card-inner{padding:17px}
+.bonus-inner{align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="top-banner">
+    <span class="main">NO PURCHASE IS REQUIRED</span>
+    <span class="message">
+      You do not need to pay anything in order to receive your Hotel Stay Certificate.
+      As long as you
+      <span class="highlight">finish until the end of the presentation</span>,
+      it is
+      <span class="highlight">guaranteed to be emailed to you.</span>
+      <br>
+      <span class="highlight">NOT A TIMESHARE.</span>
+    </span>
+  </div>
+
+  <section class="card start-card">
+    <h2>Here’s Your Next Step</h2>
+    <p>Welcome, and thank you for finding time to join.</p>
+    <button class="start-btn" id="startBtnTop">
+      CLICK HERE TO START WATCHING THE PRESENTATION
+    </button>
+  </section>
+
+  <section class="card hero">
+
+    <img
+      class="hero-bg"
+      src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Hotel_pool_in_the_United_States.jpg"
+      alt="Hotel and resort in the United States">
+
+    <div class="hero-content">
+
+      <div class="kicker">U.S. HOTEL TRAVEL PRESENTATION</div>
+
+      <h1>Explore More of the United States</h1>
+
+      <p class="hero-sub">
+        <strong>4-Day / 3-Night U.S. Hotel Stay for 2</strong> —
+        choose from more than 35 U.S. destinations and participating hotel properties.
+      </p>
+
+      <div class="hero-tag">
+        45-minute LIVE presentation • Join from a quiet, stationary place
+      </div>
+
+    </div>
+  </section>
+
+  <section class="welcome card">
+    <h2>Welcome &amp; Thank You for Joining</h2>
+    <p>Your Hotel Stay Certificate will be released via email after the session.</p>
+  </section>
+
+  <section class="card survey-card">
+
+    <div class="survey-card-inner">
+
+      <div class="survey-badge">QUICK CHECK-IN SURVEY</div>
+
+      <h2>One Quick Step When You Join</h2>
+
+      <p>
+        When you join the presentation, you'll be asked to complete a short
+        participant survey. This simply helps us get to know our audience
+        and understand who we're presenting to.
+      </p>
+
+      <p>
+        Some questions may include your <strong>total household income</strong>
+        and <strong>residency/citizenship</strong>. For household income,
+        please consider the <strong>combined income of everyone</strong> in
+        your household, including yourself, your spouse/partner, or other
+        contributing family members (<strong>ideally $50,000/year</strong>).
+      </p>
+
+      <div class="survey-highlight">
+        <strong>The survey does not affect your ability to join the presentation.</strong>
+        Everyone is welcome to attend!
+      </div>
+
+      <div class="survey-note">
+        Please complete the short check-in when Zoom opens so the host can check you in.
+      </div>
+
+    </div>
+  </section>
+
+  <section class="bonus">
+
+    <div class="bonus-inner">
+
+      <div class="bonus-icon">🎁</div>
+
+      <div>
+        <strong>+$100 Rewards Voucher Bonus</strong><br>
+        Use a <strong>laptop, desktop, or tablet</strong> for the best viewing
+        experience and receive the bonus on top of your Hotel Stay Certificate.
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="card section">
+
+    <img
+      class="hotel-photo"
+      src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Courtyard_by_Marriott_hotel_in_downtown_Athens_Georgia_01.jpg"
+      alt="Marriott hotel in the United States">
+
+    <h2>4-Day / 3-Night U.S. Hotel Stay for 2</h2>
+
+    <p class="section-intro">
+      Discover participating hotels across more than 35 U.S. destinations.
+    </p>
+
+    <ul class="benefits">
+
+      <li>
+        <strong>35+ U.S. destinations</strong> to choose from
+      </li>
+
+      <li>
+        Participating <strong>Marriott, Hyatt, Hilton, IHG, and Wyndham</strong>
+        properties
+      </li>
+
+      <li>
+        <strong>4-Day / 3-Night</strong> hotel stay for 2
+      </li>
+
+      <li>
+        Explore a wide variety of U.S. vacation destinations
+      </li>
+
+      <li>
+        Powered by <strong>RedeemVacation</strong> — trusted travel rewards provider
+      </li>
+
+    </ul>
+
+    <div class="closing">
+      Choose Your Destination, Travel Later!
+    </div>
+
+  </section>
+
+  <section class="card start-card">
+
+    <h2>Here’s Your Next Step</h2>
+
+    <p>Welcome, and thank you for finding time to join.</p>
+
+    <button class="start-btn" id="startBtnBottom">
+      CLICK HERE TO START WATCHING THE PRESENTATION
+    </button>
+
+  </section>
+
+</div>
+
+<div class="modal-overlay" id="modal">
+
+  <div class="modal-wrap">
+
+    <div class="modal">
+
+      <button class="close" id="closeBtn" aria-label="Close">×</button>
+
+      <div id="safetyStep">
+
+        <h3>Before You Continue</h3>
+
+        <div class="safety">
+          <strong>Please join from a quiet, stationary place.</strong>
+          <br><br>
+          For safety, we cannot accommodate participants who are driving or in a moving vehicle.
+        </div>
+
+        <button class="continue-btn" id="safetyContinue">
+          I UNDERSTAND — CONTINUE
+        </button>
+
+      </div>
+
+      <div id="surveyStep" style="display:none">
+
+        <h3>Quick Check-In Survey</h3>
+
+        <div class="survey">
+
+          <p>
+            When you join the presentation, you'll be asked to complete a short
+            participant survey. This simply helps us get to know our audience
+            and understand who we're presenting to.
+          </p>
+
+          <p>
+            Some questions may include your <strong>total household income</strong>
+            and <strong>residency/citizenship</strong>. For household income,
+            please consider the <strong>combined income of everyone</strong>
+            in your household, including yourself, your spouse/partner, or
+            other contributing family members (<strong>ideally $50,000/year</strong>).
+          </p>
+
+          <p>
+            The survey does not affect your ability to join the presentation.
+            Everyone is welcome to attend!
+          </p>
+
+          <div class="survey note">
+            Please complete the short check-in when Zoom opens so the host can check you in.
+          </div>
+
+          <label class="check">
+            <input type="checkbox" id="surveyOk">
+            <span>
+              I understand the quick check-in survey and am ready to continue.
+            </span>
+          </label>
+
+          <button class="continue-btn" id="surveyContinue" disabled>
+            I UNDERSTAND — CONTINUE
+          </button>
+
+        </div>
+
+      </div>
+
+      <div id="choiceStep" style="display:none">
+
+        <h3>Choose How You’re Connecting</h3>
+
+        <div class="choice-grid">
+
+          <button class="choice" id="mobileChoice">
+
+            <div class="choice-icon">📱</div>
+
+            <strong>Mobile Phone</strong>
+
+            <span>Go directly to the presentation.</span>
+
+          </button>
+
+          <button class="choice wide" id="wideChoice">
+
+            <div class="choice-icon">💻</div>
+
+            <strong>Laptop, Desktop or Tablet</strong>
+
+            <span>Best viewing experience.</span>
+
+            <div class="wide-reward">
+
+              <span class="reward-amount">
+                +$100 REWARDS VOUCHER
+              </span>
+
+              <span class="reward-text">
+                BONUS FOR CONNECTING THIS WAY
+              </span>
+
+            </div>
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <div id="wideStep" style="display:none">
+
+        <h3>Send Me the Hotel Stay Details</h3>
+
+        <div class="email-box">
+
+          <label for="email">Enter your email</label>
+
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com">
+
+          <div class="email-note">
+            We’ll send the Zoom meeting details to this email.
+          </div>
+
+          <button class="send-btn" id="sendZoom">
+            SEND ZOOM DETAILS TO MY EMAIL
+          </button>
+
+          <div class="status" id="status"></div>
+
+        </div>
+
+        <div class="zoom-note">
+          <strong>Check your inbox.</strong>
+          If you do not see it shortly, check spam or junk.
+        </div>
+
+        <button class="back" id="wideBack">
+          ← Back
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const MOBILE_LINK="https://live.travelaht.com/aht";
+
+const EMAIL_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwPXYcc6KWOaRs4fRITn5rpHlNw31gCyQIJLzqd96mZnBon6PKnh0GY9UL8_N4MPiUPoA/exec";
+
+const modal=document.getElementById("modal");
+const safety=document.getElementById("safetyStep");
+const survey=document.getElementById("surveyStep");
+const choices=document.getElementById("choiceStep");
+const wide=document.getElementById("wideStep");
+const statusBox=document.getElementById("status");
+
+function openModal(){
+
+  safety.style.display="block";
+  survey.style.display="none";
+  choices.style.display="none";
+  wide.style.display="none";
+
+  const surveyOk=document.getElementById("surveyOk");
+  const surveyContinue=document.getElementById("surveyContinue");
+
+  surveyOk.checked=false;
+  surveyContinue.disabled=true;
+
+  statusBox.className="status";
+  statusBox.textContent="";
+
+  modal.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeModal(){
+
+  modal.classList.remove("open");
+  document.body.style.overflow="";
+
+}
+
+document.getElementById("startBtnTop")
+.addEventListener("click",openModal);
+
+document.getElementById("startBtnBottom")
+.addEventListener("click",openModal);
+
+document.getElementById("closeBtn")
+.addEventListener("click",closeModal);
+
+modal.addEventListener("click",e=>{
+
+  if(e.target===modal) closeModal();
+
+});
+
+document.addEventListener("keydown",e=>{
+
+  if(e.key==="Escape") closeModal();
+
+});
+
+document.getElementById("safetyContinue")
+.addEventListener("click",()=>{
+
+  safety.style.display="none";
+  survey.style.display="block";
+
+});
+
+const surveyOk=document.getElementById("surveyOk");
+const surveyContinue=document.getElementById("surveyContinue");
+
+surveyOk.addEventListener("change",()=>{
+
+  surveyContinue.disabled=!surveyOk.checked;
+
+});
+
+surveyContinue.addEventListener("click",()=>{
+
+  survey.style.display="none";
+  choices.style.display="block";
+
+});
+
+document.getElementById("mobileChoice")
+.addEventListener("click",()=>{
+
+  window.location.href=MOBILE_LINK;
+
+});
+
+document.getElementById("wideChoice")
+.addEventListener("click",()=>{
+
+  choices.style.display="none";
+  wide.style.display="block";
+
+});
+
+document.getElementById("wideBack")
+.addEventListener("click",()=>{
+
+  wide.style.display="none";
+  choices.style.display="block";
+
+});
+
+document.getElementById("sendZoom")
+.addEventListener("click",async()=>{
+
+  const email=document.getElementById("email");
+  const button=document.getElementById("sendZoom");
+
+  if(!email.checkValidity()){
+
+    email.reportValidity();
+    return;
+
+  }
+
+  if(!EMAIL_SCRIPT_URL ||
+     EMAIL_SCRIPT_URL.includes("PASTE_YOUR_")){
+
+    statusBox.className="status error";
+    statusBox.textContent="Email sending is not connected yet.";
+    return;
+
+  }
+
+  button.disabled=true;
+  button.textContent="SENDING…";
+
+  statusBox.className="status";
+  statusBox.textContent="";
+
+  try{
+
+    const response=await fetch(EMAIL_SCRIPT_URL,{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":
+        "application/x-www-form-urlencoded;charset=UTF-8"
+      },
+
+      body:new URLSearchParams({
+
+        action:"sendZoomDetails",
+        email:email.value.trim(),
+        source:"U.S. Hotel Join Now"
+
+      })
+
+    });
+
+    const result=await response
+      .json()
+      .catch(()=>({}));
+
+    if(!response.ok || result.success===false)
+      throw new Error(result.message||"Send failed");
+
+    statusBox.className="status success";
+
+    statusBox.textContent=
+      "Sent. Please check your inbox for the Zoom details.";
+
+    button.textContent="EMAIL SENT";
+
+  }catch(error){
+
+    statusBox.className="status error";
+
+    statusBox.textContent=
+      "We couldn’t send the email right now. Please try again.";
+
+    button.disabled=false;
+
+    button.textContent=
+      "SEND ZOOM DETAILS TO MY EMAIL";
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
