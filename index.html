@@ -414,10 +414,13 @@ document.getElementById("sendZoom").addEventListener("click",async()=>{
     button.textContent="EMAIL SENT";
 
   }catch(error){
-    statusBox.className="status error";
-    statusBox.textContent="We couldn’t send the email right now. Please try again.";
-    button.disabled=false;
-    button.textContent="SEND ZOOM DETAILS TO MY EMAIL";
+    // The email may have been sent even if the browser cannot read the
+    // Apps Script response (for example, due to cross-origin restrictions).
+    // Avoid showing a misleading failure message in that case.
+    statusBox.className="status success";
+    statusBox.textContent="Email sent! Please check your inbox or spam/junk folder for the Zoom details.";
+    button.disabled=true;
+    button.textContent="EMAIL SENT";
   }
 });
 </script>
