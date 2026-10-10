@@ -19,6 +19,7 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 .start-card p{margin:0 0 15px;color:#607487}
 .start-btn{border:0;border-radius:12px;background:#0b7a75;color:#fff;padding:14px 18px;font-weight:950;font-size:.9rem;cursor:pointer;width:100%;box-shadow:0 6px 15px rgba(11,122,117,.22)}
 .start-btn:active{transform:translateY(1px)}
+.start-btn:disabled{opacity:.48;filter:grayscale(.3);cursor:not-allowed;box-shadow:none}
 .pulse-notice{margin:14px 0 0;padding:15px 14px;border:2px solid #f2c94c;border-radius:14px;background:linear-gradient(135deg,#fffdf0,#fff6cf);color:#17324d;box-shadow:0 0 0 rgba(242,201,76,.35);animation:noticePulse 1.9s ease-in-out infinite}
 .pulse-notice>strong{display:block;color:#0b6c68;font-size:1.02rem;font-weight:950;letter-spacing:.3px}
 .pulse-notice p{margin:7px 0;color:#425c6d;font-size:.9rem}
@@ -205,18 +206,6 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
         <button class="continue-btn" id="safetyContinue">I UNDERSTAND — CONTINUE</button>
       </div>
 
-      <div id="surveyStep" style="display:none">
-        <h3>Quick Check-In Survey</h3>
-        <div class="survey">
-          <p>When you join the presentation, you'll be asked to complete a short participant survey. This simply helps us get to know our audience and understand who we're presenting to.</p>
-          <p>Some questions may include your <strong>total household income</strong> and <strong>residency/citizenship</strong>. For household income, please consider the <strong>combined income of everyone</strong> in your household, including yourself, your spouse/partner, or other contributing family members (<strong>ideally $50,000/year</strong>).</p>
-          <p>The survey does not affect your ability to join the presentation. Everyone is welcome to attend!</p>
-          <div class="survey note">Please complete the short check-in when Zoom opens so the host can check you in.</div>
-          <label class="check"><input type="checkbox" id="surveyOk"> <span>I understand the quick check-in survey and am ready to continue.</span></label>
-          <button class="continue-btn" id="surveyContinue" disabled>I UNDERSTAND — CONTINUE</button>
-        </div>
-      </div>
-
       <div id="choiceStep" style="display:none">
         <h3>Choose How You’re Connecting</h3>
         <div class="choice-grid">
@@ -263,23 +252,14 @@ const EMAIL_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwPXYcc6KWOaRs4f
 
 const modal=document.getElementById("modal");
 const safety=document.getElementById("safetyStep");
-const survey=document.getElementById("surveyStep");
 const choices=document.getElementById("choiceStep");
 const wide=document.getElementById("wideStep");
 const statusBox=document.getElementById("status");
 
 function openModal(){
   safety.style.display="block";
-  survey.style.display="none";
   choices.style.display="none";
   wide.style.display="none";
-
-  const surveyOk=document.getElementById("surveyOk");
-  const surveyContinue=document.getElementById("surveyContinue");
-
-  surveyOk.checked=false;
-  surveyContinue.disabled=true;
-
   statusBox.className="status";
   statusBox.textContent="";
   modal.classList.add("open");
@@ -291,11 +271,13 @@ function closeModal(){
   document.body.style.overflow="";
 }
 
-document.getElementById("startBtnTop").addEventListener("click",openModal);
-document.getElementById("startBtnBottom").addEventListener("click",openModal);
+const startBtnTop=document.getElementById("startBtnTop");
+const startBtnBottom=document.getElementById("startBtnBottom");
+startBtnTop.addEventListener("click",()=>{if(isPresentationWindowOpen())openModal();});
+startBtnBottom.addEventListener("click",()=>{if(isPresentationWindowOpen())openModal();});
 document.getElementById("closeBtn").addEventListener("click",closeModal);
 
-// Eastern Time schedule: Zoom CTA active from 1:45 PM through 8:44 PM ET.
+// Eastern Time schedule: Watch is active from 1:45 PM until 8:45 PM ET.
 const startBtnAfterSurvey=document.getElementById("startBtnAfterSurvey");
 const reserveBtnAfterSurvey=document.getElementById("reserveBtnAfterSurvey");
 const ctaStatus=document.getElementById("ctaStatus");
@@ -307,21 +289,21 @@ function isPresentationWindowOpen(){
   const hour=Number(parts.find(p=>p.type==="hour").value);
   const minute=Number(parts.find(p=>p.type==="minute").value);
   const time=hour*60+minute;
-  return time>=13*60+45 && time<=20*60+44;
+  return time>=13*60+45 && time<20*60+45;
 }
 function updateScheduleButtons(){
   const open=isPresentationWindowOpen();
-  startBtnAfterSurvey.disabled=!open;
+  [startBtnTop,startBtnBottom,startBtnAfterSurvey].forEach(button=>{
+    button.disabled=!open;
+    button.textContent=button===startBtnAfterSurvey
+      ? "CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM"
+      : "CLICK HERE TO START WATCHING THE PRESENTATION";
+  });
   reserveBtnAfterSurvey.disabled=open;
-  if(open){
-    startBtnAfterSurvey.textContent="CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM";
-    reserveBtnAfterSurvey.textContent="RESERVE YOUR SPOT";
-    ctaStatus.textContent="Live presentation is available now. Reservation opens outside the presentation window.";
-  }else{
-    startBtnAfterSurvey.textContent="ZOOM PRESENTATION OPENS 1:45 PM–8:44 PM ET";
-    reserveBtnAfterSurvey.textContent="RESERVE YOUR SPOT";
-    ctaStatus.textContent="The live presentation is currently outside its scheduled window. You can reserve your spot now.";
-  }
+  reserveBtnAfterSurvey.textContent="RESERVE YOUR SPOT";
+  ctaStatus.textContent=open
+    ? "Live presentation is available now. Reservation opens outside the presentation window."
+    : "The live presentation is currently outside its scheduled window. You can reserve your spot now.";
 }
 startBtnAfterSurvey.addEventListener("click",()=>{
   if(!isPresentationWindowOpen())return;
@@ -332,7 +314,7 @@ reserveBtnAfterSurvey.addEventListener("click",()=>{
   window.location.href=RESERVATION_URL;
 });
 updateScheduleButtons();
-setInterval(updateScheduleButtons,30000);
+setInterval(updateScheduleButtons,10000);
 
 modal.addEventListener("click",e=>{
   if(e.target===modal)closeModal()
@@ -344,18 +326,6 @@ document.addEventListener("keydown",e=>{
 
 document.getElementById("safetyContinue").addEventListener("click",()=>{
   safety.style.display="none";
-  survey.style.display="block";
-});
-
-const surveyOk=document.getElementById("surveyOk");
-const surveyContinue=document.getElementById("surveyContinue");
-
-surveyOk.addEventListener("change",()=>{
-  surveyContinue.disabled=!surveyOk.checked;
-});
-
-surveyContinue.addEventListener("click",()=>{
-  survey.style.display="none";
   choices.style.display="block";
 });
 
