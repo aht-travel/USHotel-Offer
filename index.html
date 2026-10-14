@@ -19,7 +19,7 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 .start-card p{margin:0 0 15px;color:#607487}
 .start-btn{border:0;border-radius:12px;background:#0b7a75;color:#fff;padding:14px 18px;font-weight:950;font-size:.9rem;cursor:pointer;width:100%;box-shadow:0 6px 15px rgba(11,122,117,.22)}
 .start-btn:active{transform:translateY(1px)}
-.start-btn:disabled{opacity:.48;filter:grayscale(.3);cursor:not-allowed;box-shadow:none}
+
 .pulse-notice{margin:14px 0 0;padding:15px 14px;border:2px solid #f2c94c;border-radius:14px;background:linear-gradient(135deg,#fffdf0,#fff6cf);color:#17324d;box-shadow:0 0 0 rgba(242,201,76,.35);animation:noticePulse 1.9s ease-in-out infinite}
 .pulse-notice>strong{display:block;color:#0b6c68;font-size:1.02rem;font-weight:950;letter-spacing:.3px}
 .pulse-notice p{margin:7px 0;color:#425c6d;font-size:.9rem}
@@ -28,8 +28,10 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 .welcome-bonus{margin:12px 0 0}
 .cta-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
 .cta-pair .start-btn{min-height:58px;line-height:1.35}
-.cta-pair .reserve-btn{border:0;border-radius:12px;background:#17324d;color:#fff;padding:14px 18px;font-weight:950;font-size:.9rem;cursor:pointer;width:100%;box-shadow:0 6px 15px rgba(23,50,77,.2)}
-.cta-pair button:disabled{opacity:.48;filter:grayscale(.3);cursor:not-allowed;box-shadow:none}
+.reserve-btn{display:block;border:0;border-radius:12px;background:#17324d;color:#fff;padding:14px 18px;font-weight:950;font-size:.9rem;cursor:pointer;width:100%;box-shadow:0 6px 15px rgba(23,50,77,.2);margin-top:9px;min-height:52px}
+.reserve-btn:hover{background:#214867}
+.start-btn:disabled,.reserve-btn:disabled,.cta-pair button:disabled{opacity:.48;filter:grayscale(.3);cursor:not-allowed;box-shadow:none}
+.cta-pair .reserve-btn{margin-top:0;min-height:58px}
 .cta-status{text-align:center;color:#607487;font-size:.78rem;font-weight:700;margin:-4px 0 12px}
 @media(max-width:560px){.cta-pair{grid-template-columns:1fr}.pulse-notice{padding:13px 11px}}
 
@@ -116,16 +118,10 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
 <body>
 <div class="container">
 
-  <section class="card start-card">
-    <h2>Here’s Your Next Step</h2>
-    <p>Welcome, and thank you for finding time to join.</p>
-    <button class="start-btn" id="startBtnTop">CLICK HERE TO START WATCHING THE PRESENTATION</button>
-  </section>
-
-  <section class="card hero">
+<section class="card hero">
     <img class="hero-bg"
       src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=85"
-      alt="Beautiful luxury hotel resort">
+      alt="Beautiful luxury hotel resort in the United States">
     <div class="hero-content">
       <div class="kicker">U.S. HOTEL TRAVEL PRESENTATION</div>
       <h1>Discover Your Next U.S. Getaway</h1>
@@ -151,27 +147,34 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
     </section>
   </section>
 
+  <section class="card start-card">
+    <h2>Ready to Join?</h2>
+    <p>Start the live presentation when it is available, or reserve a spot for another session.</p>
+    <button class="start-btn schedule-start" id="startBtnTop" type="button">JOIN THE LIVE PRESENTATION →</button>
+    <button class="reserve-btn" id="reserveBtnTop" type="button">RESERVE A SPOT FOR ANOTHER SESSION →</button>
+  </section>
+
   <section class="card survey-card">
     <div class="survey-card-inner">
       <div class="survey-badge">QUICK CHECK-IN SURVEY</div>
       <h2>One Quick Step When You Join</h2>
-      <p>When you join the presentation, you'll be asked to complete a short participant survey. This simply helps us get to know our audience and understand who we're presenting to.</p>
-      <p>Some questions may include your <strong>total household income</strong> and <strong>residency/citizenship</strong>. For household income, please consider the <strong>combined income of everyone</strong> in your household, including yourself, your spouse/partner, or other contributing family members (<strong>ideally $50,000/year</strong>).</p>
+      <p>When the presentation opens, you may be asked to complete a short participant survey. It helps us learn about our audience and is for audience research.</p>
+      <p>Some questions may include <strong>residency/citizenship</strong> and <strong>combined annual household income</strong>. For income, consider the total income of you, your spouse/partner, and any family members who contribute to the household. <strong>$50,000 per year is an ideal guideline, not a requirement.</strong></p>
       <div class="survey-highlight">
-        <strong>The survey does not affect your ability to join the presentation.</strong>
-        Everyone is welcome to attend!
+        <strong>Your survey answers do not affect your eligibility to attend.</strong>
+        Everyone is welcome to watch the presentation.
       </div>
       <div class="survey-note">
-        Please complete the short check-in when Zoom opens so the host can check you in.
+        You can complete the short survey when the presentation opens. Nothing else needs to be filled out on this landing page.
       </div>
     </div>
   </section>
 
   <section class="cta-pair" aria-label="Presentation and reservation options">
-    <button class="start-btn" id="startBtnAfterSurvey" type="button">CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM</button>
-    <button class="reserve-btn" id="reserveBtnAfterSurvey" type="button" disabled>RESERVE YOUR SPOT</button>
+    <button class="start-btn schedule-start" id="startBtnAfterSurvey" type="button">JOIN THE LIVE PRESENTATION →</button>
+    <button class="reserve-btn" id="reserveBtnAfterSurvey" type="button">RESERVE A SPOT FOR ANOTHER SESSION →</button>
   </section>
-  <div class="cta-status" id="ctaStatus" aria-live="polite">Checking presentation availability…</div>
+  <div class="cta-status" id="ctaStatus" aria-live="polite">Reserve your spot anytime, or join the live presentation when available.</div>
 
   <section class="card section">
     <img class="hotel-photo"
@@ -191,7 +194,8 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
   <section class="card start-card">
     <h2>Here’s Your Next Step</h2>
     <p>Welcome, and thank you for finding time to join.</p>
-    <button class="start-btn" id="startBtnBottom">CLICK HERE TO START WATCHING THE PRESENTATION</button>
+    <button class="start-btn schedule-start" id="startBtnBottom" type="button">JOIN THE LIVE PRESENTATION →</button>
+    <button class="reserve-btn" id="reserveBtnBottom" type="button">RESERVE A SPOT FOR ANOTHER SESSION →</button>
   </section>
 </div>
 
@@ -230,15 +234,20 @@ body{margin:0;background:#eef5f8;color:#17324d;font-family:Arial,Helvetica,sans-
       </div>
 
       <div id="wideStep" style="display:none">
-        <h3>Send Me the Hotel Stay Details</h3>
-        <div class="email-box">
-          <label for="email">Enter your email</label>
+        <h3>You're Ready to Join</h3>
+        <div class="safety">
+          <strong>Join the live presentation directly:</strong><br>
+          Open the presentation in a new tab. If prompted, choose <strong>“Join from your browser”</strong> to continue without opening the Zoom app.
+          <button class="continue-btn" id="directJoin" type="button">JOIN THE LIVE PRESENTATION →</button>
+        </div>
+        <div class="email-box" style="margin-top:12px">
+          <label for="email">Prefer the link by email? (Optional)</label>
           <input id="email" type="email" autocomplete="email" placeholder="you@example.com">
-          <div class="email-note">We’ll send the Zoom meeting details to this email.</div>
-          <button class="send-btn" id="sendZoom">SEND ZOOM DETAILS TO MY EMAIL</button>
+          <div class="email-note">Email is optional. You can join directly using the button above.</div>
+          <button class="send-btn" id="sendZoom">EMAIL ME THE PRESENTATION LINK</button>
           <div class="status" id="status"></div>
         </div>
-        <div class="zoom-note"><strong>Check your inbox.</strong> If you do not see it shortly, check spam or junk.</div>
+        <div class="zoom-note">You can also type <strong>live.travelaht.com/aht</strong> into your browser.</div>
         <button class="back" id="wideBack">← Back</button>
       </div>
 
@@ -260,6 +269,7 @@ function openModal(){
   safety.style.display="block";
   choices.style.display="none";
   wide.style.display="none";
+
   statusBox.className="status";
   statusBox.textContent="";
   modal.classList.add("open");
@@ -271,50 +281,68 @@ function closeModal(){
   document.body.style.overflow="";
 }
 
-const startBtnTop=document.getElementById("startBtnTop");
-const startBtnBottom=document.getElementById("startBtnBottom");
-startBtnTop.addEventListener("click",()=>{if(isPresentationWindowOpen())openModal();});
-startBtnBottom.addEventListener("click",()=>{if(isPresentationWindowOpen())openModal();});
-document.getElementById("closeBtn").addEventListener("click",closeModal);
-
-// Eastern Time schedule: Watch is active from 1:45 PM until 8:45 PM ET.
-const startBtnAfterSurvey=document.getElementById("startBtnAfterSurvey");
-const reserveBtnAfterSurvey=document.getElementById("reserveBtnAfterSurvey");
-const ctaStatus=document.getElementById("ctaStatus");
 const RESERVATION_URL="https://aloha-hawaii-tours.github.io/spot-reservation/";
+const startButtons=[
+  document.getElementById("startBtnTop"),
+  document.getElementById("startBtnAfterSurvey"),
+  document.getElementById("startBtnBottom")
+];
+const reserveButtons=[
+  document.getElementById("reserveBtnTop"),
+  document.getElementById("reserveBtnAfterSurvey"),
+  document.getElementById("reserveBtnBottom")
+];
+const ctaStatus=document.getElementById("ctaStatus");
+
 function isPresentationWindowOpen(){
+  // Presentation access window: 1:45 PM–8:44 PM Eastern Time.
   const parts=new Intl.DateTimeFormat("en-US",{
     timeZone:"America/New_York",hour:"2-digit",minute:"2-digit",hourCycle:"h23"
   }).formatToParts(new Date());
   const hour=Number(parts.find(p=>p.type==="hour").value);
   const minute=Number(parts.find(p=>p.type==="minute").value);
   const time=hour*60+minute;
-  return time>=13*60+45 && time<20*60+45;
+  return time>=13*60+45 && time<=20*60+44;
 }
+
 function updateScheduleButtons(){
-  const open=isPresentationWindowOpen();
-  [startBtnTop,startBtnBottom,startBtnAfterSurvey].forEach(button=>{
-    button.disabled=!open;
-    button.textContent=button===startBtnAfterSurvey
-      ? "CLICK HERE TO START WATCHING THE PRESENTATION ON ZOOM"
-      : "CLICK HERE TO START WATCHING THE PRESENTATION";
+  const live=isPresentationWindowOpen();
+  startButtons.forEach(button=>{
+    button.disabled=!live;
+    button.textContent=live
+      ? "JOIN THE LIVE PRESENTATION →"
+      : "LIVE PRESENTATION UNAVAILABLE RIGHT NOW";
+    button.setAttribute("aria-disabled",String(!live));
   });
-  reserveBtnAfterSurvey.disabled=open;
-  reserveBtnAfterSurvey.textContent="RESERVE YOUR SPOT";
-  ctaStatus.textContent=open
-    ? "Live presentation is available now. Reservation opens outside the presentation window."
-    : "The live presentation is currently outside its scheduled window. You can reserve your spot now.";
+  // Reserve buttons intentionally remain active at all times, including while live.
+  reserveButtons.forEach(button=>{
+    button.disabled=false;
+    button.textContent="RESERVE A SPOT FOR ANOTHER SESSION →";
+    button.setAttribute("aria-disabled","false");
+  });
+  if(ctaStatus){
+    ctaStatus.textContent=live
+      ? "The live presentation is available now. You can also reserve a spot for another session anytime."
+      : "The live presentation isn't available right now. You can reserve a spot for another session anytime.";
+  }
 }
-startBtnAfterSurvey.addEventListener("click",()=>{
-  if(!isPresentationWindowOpen())return;
+
+startButtons.forEach(button=>button.addEventListener("click",()=>{
+  if(!isPresentationWindowOpen()){
+    updateScheduleButtons();
+    return;
+  }
   openModal();
-});
-reserveBtnAfterSurvey.addEventListener("click",()=>{
-  if(isPresentationWindowOpen())return;
-  window.location.href=RESERVATION_URL;
-});
+}));
+
+reserveButtons.forEach(button=>button.addEventListener("click",()=>{
+  // Direct navigation makes each Reserve Your Spot button work independently.
+  window.location.assign(RESERVATION_URL);
+}));
+
+document.getElementById("closeBtn").addEventListener("click",closeModal);
 updateScheduleButtons();
-setInterval(updateScheduleButtons,10000);
+setInterval(updateScheduleButtons,15000);
 
 modal.addEventListener("click",e=>{
   if(e.target===modal)closeModal()
@@ -338,6 +366,16 @@ document.getElementById("wideChoice").addEventListener("click",()=>{
   wide.style.display="block";
 });
 
+document.getElementById("directJoin").addEventListener("click",()=>{
+  if(!isPresentationWindowOpen()){
+    updateScheduleButtons();
+    statusBox.className="status error";
+    statusBox.textContent="The live presentation isn't available right now. Please reserve a spot for another session.";
+    return;
+  }
+  window.open(MOBILE_LINK,"_blank","noopener,noreferrer");
+});
+
 document.getElementById("wideBack").addEventListener("click",()=>{
   wide.style.display="none";
   choices.style.display="block";
@@ -346,6 +384,13 @@ document.getElementById("wideBack").addEventListener("click",()=>{
 document.getElementById("sendZoom").addEventListener("click",async()=>{
   const email=document.getElementById("email");
   const button=document.getElementById("sendZoom");
+
+  if(!email.value.trim()){
+    statusBox.className="status error";
+    statusBox.textContent="Enter your email to receive the link, or use the direct join button above.";
+    email.focus();
+    return;
+  }
 
   if(!email.checkValidity()){
     email.reportValidity();
@@ -384,13 +429,10 @@ document.getElementById("sendZoom").addEventListener("click",async()=>{
     button.textContent="EMAIL SENT";
 
   }catch(error){
-    // The email may have been sent even if the browser cannot read the
-    // Apps Script response (for example, due to cross-origin restrictions).
-    // Avoid showing a misleading failure message in that case.
-    statusBox.className="status success";
-    statusBox.textContent="Email sent! Please check your inbox or spam/junk folder for the Zoom details.";
-    button.disabled=true;
-    button.textContent="EMAIL SENT";
+    statusBox.className="status error";
+    statusBox.textContent="We couldn't confirm email delivery. Please use the direct join button above, or try again later.";
+    button.disabled=false;
+    button.textContent="TRY EMAIL AGAIN";
   }
 });
 </script>
